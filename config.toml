@@ -64,16 +64,16 @@ theme="github-light"
 
 # Please visit https://giscus.app/ to generate settings.
 [params.giscus]
-    data-repo="oreoinhell/oreoinhell.github.io"
-    data-repo-id="R_kgDOOel4cQ"
+    data-repo="oreoinhell/comments"
+    data-repo-id="R_kgDOPFv73Q"
     data-category="General"
-    data-category-id="DIC_kwDOOel4cc4CsYbK"
+    data-category-id="DIC_kwDOPFv73c4CsYiV"
     data-mapping="pathname"
     data-strict="0"
     data-reactions-enabled="1"
     data-emit-metadata="0"
     data-input-position="bottom"
-    data-theme="light"
+    data-theme="preferred_color_scheme"
     data-lang="en-us"
     crossorigin="anonymous"
 
@@ -90,6 +90,11 @@ url = "/posts"
 name = "Archive"
 weight = 1
 [[menu.main]]
+url = "https://archiveofourown.org/users/oreo_one"
+name = "AO3"
+weight = 4
+[[menu.main]]
 url = "/index.xml"
 name = "RSS Feed"
-weight = 4
+weight = 5
+
