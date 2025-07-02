@@ -28,10 +28,15 @@ theme = "diary"
     style = "perldoc"
     tabWidth = 4
 
+   [markup.goldmark.renderer]
+      unsafe = true
+
 [params]
 subtitle = "Themed by Diary."
 enableGitalk = false
 enableGiscus = true
+favicon = "favicon.ico"
+enableReadingTime = true
 
 # Microsoft Clarity (https://clarity.microsoft.com/) is a free user behavior recording and analytics tool
 clarity = "abcdefghzd"
@@ -59,19 +64,19 @@ theme="github-light"
 
 # Please visit https://giscus.app/ to generate settings.
 [params.giscus]
-    data_repo="username/repo"
-    data_repo_id="**************************"    
-    data_category="General"
-    data_category_id="*********************"
-    data_mapping="pathname"
-    data_strict="0"
-    data_reactions_enabled="1"
-    data_emit_metadata="0"
-    data_input_position="bottom"
-    data_theme="preferred_color_scheme"
-    data_lang="en"
+    data-repo="oreoinhell/oreoinhell.github.io"
+    data-repo-id="R_kgDOOel4cQ"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOOel4cc4CsYbK"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="light"
+    data-lang="zh-CN"
+    data-loading="lazy"
     crossorigin="anonymous"
-
 
 [[menu.main]]
 url = "/categories"
