@@ -7,8 +7,15 @@
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright>是的，这里都是oreoinhell写的，写起来还挺麻烦的。</copyright>
-    <lastBuildDate>Wed, 02 Jul 2025 22:07:52 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 03 Jul 2025 01:47:56 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>随想</title>
+      <link>http://localhost:1313/categories/%E9%9A%8F%E6%83%B3/</link>
+      <pubDate>Thu, 03 Jul 2025 01:47:56 +0800</pubDate>
+      <guid>http://localhost:1313/categories/%E9%9A%8F%E6%83%B3/</guid>
+      <description></description>
+    </item>
     <item>
       <title>笔记</title>
       <link>http://localhost:1313/categories/%E7%AC%94%E8%AE%B0/</link>
