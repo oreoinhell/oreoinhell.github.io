@@ -37,6 +37,7 @@ enableGitalk = false
 enableGiscus = true
 favicon = "favicon.ico"
 enableReadingTime = true
+enableGiscus = true
 
 # Microsoft Clarity (https://clarity.microsoft.com/) is a free user behavior recording and analytics tool
 clarity = "abcdefghzd"
