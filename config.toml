@@ -2,7 +2,7 @@ baseURL = "http://oreoinhell.github.io"
 DefaultContentLanguage = "zh" # Theme's display language, supports: en, fr, zh, zh-hant
 languageCode = "en-us"
 title = "奥利奥的深坑"
-copyright = "This is a customized copyright."
+copyright = "是的，这里都是oreoinhell写的，写起来还挺麻烦的。"
 theme = "diary"
 
 # Generate sitemap in the public folder
@@ -74,7 +74,7 @@ theme="github-light"
     data-emit-metadata="0"
     data-input-position="bottom"
     data-theme="light"
-    data-lang="zh-CN"
+    data-lang="en-us"
     crossorigin="anonymous"
 
 [[menu.main]]
