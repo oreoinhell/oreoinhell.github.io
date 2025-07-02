@@ -37,7 +37,6 @@ enableGitalk = false
 enableGiscus = true
 favicon = "favicon.ico"
 enableReadingTime = true
-enableGiscus = true
 
 # Microsoft Clarity (https://clarity.microsoft.com/) is a free user behavior recording and analytics tool
 clarity = "abcdefghzd"
@@ -67,16 +66,15 @@ theme="github-light"
 [params.giscus]
     data-repo="oreoinhell/oreoinhell.github.io"
     data-repo-id="R_kgDOOel4cQ"
-    data-category="Announcements"
+    data-category="General"
     data-category-id="DIC_kwDOOel4cc4CsYbK"
     data-mapping="pathname"
     data-strict="0"
     data-reactions-enabled="1"
     data-emit-metadata="0"
-    data-input-position="top"
+    data-input-position="bottom"
     data-theme="light"
     data-lang="zh-CN"
-    data-loading="lazy"
     crossorigin="anonymous"
 
 [[menu.main]]
