@@ -1,0 +1,56 @@
+---
+title: "关于我"
+draft: false
+comments: false
+toc: false
+type: "about" 
+_build:
+  list: never
+  render: always
+---
+<style>
+    /* 1. 隐藏右侧目录 (TOC) */
+    #toc-container, .toc {
+        display: none !important;
+    }
+
+    /* 2. 隐藏文章标题下方的发布时间/元数据 */
+    .post-meta {
+        display: none !important;
+    }
+
+    /* 3. 隐藏底部的 Giscus 评论区 */
+    .giscus, #comments {
+        display: none !important;
+    }
+
+    /* 4. 隐藏“上一篇/下一篇”导航链接 (新增) */
+    .post-pagination {
+        display: none !important;
+    }
+    
+    /* 可选：让文章内容居中并变宽 */
+    .post-content {
+        width: 100% !important;
+        max-width: none !important;
+    }
+</style>
+## 你好，我是奥利奥 👋
+
+这里是我的深坑，用来存放我的胡思乱想，说不定会有同人？但我感觉还是放在ao3上好些。
+
+### 关于本站
+其实我没有什么特别的理由建这个站，单纯觉得在当下的环境下，无论如何需要有这么个地方。路过的人光是从我更新内容的频率就很容易发现，我其实也没有那么多适合写成长文的内容。现在能想到可以写的就只有，呃，对某些事情与看过的东西的感想。说不定以后继续科研或者不科研可以学着写一点科普内容？
+
+### 兴趣爱好
+* 看各种各样的同人。我的ao3账号上有我的bookmark，你可以认为凡是出现在bookmark里的东西我都喜欢。
+* 学习新的语言。其实是我对海外历史与文学有一点兴趣，所以我得号称自己喜欢学习语言，也许强调得多了我真的会这么做。
+* 观星。我初中到大学都参加了天文社团，但我的相机在初二就报废了，很多年没碰过单反，不用ipad之后也没怎么观星过了，现在就是很陌生一个状态，也许以后有钱了都可以再捡起来。如果捡起来了以后试试看摄影。
+* 翻译。这是我当下做得最多的一件事，我翻译同人，翻译跑团书，还翻译美漫。除了同人之外的东西感觉都会被版权炮，但我可能还是会在这里提一提情况与一些感想。啊，也许我能像假装学语言一样假装跟着科班学翻译。
+
+### 联系我
+你可以通过 [邮件](mailto:oreoinhell@gmail.com) 找到我。
+
+<br>
+
+![Avatar](/images/icon.png)

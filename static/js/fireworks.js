@@ -202,11 +202,11 @@
                 let dx = this.x - pointer.x;
                 let dy = this.y - pointer.y;
                 let distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < 80) {
-                    let force = (80 - distance) / 80;
+                if (distance < 50) {
+                    let force = (50 - distance) / 50;
                     let angle = Math.atan2(dy, dx);
                     // 施加斥力 (同样受 dt 影响)
-                    this.vx += Math.cos(angle) * force * 0.5 * dt; 
+                    this.vx += Math.cos(angle) * force * 0.9 * dt; 
                 }
             }
 

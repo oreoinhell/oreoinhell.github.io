@@ -97,4 +97,7 @@ weight = 4
 url = "/index.xml"
 name = "RSS Feed"
 weight = 5
-
+[[menu.main]]
+url = "/about"
+name = "About Me"
+weight = 6
