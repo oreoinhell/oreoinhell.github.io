@@ -209,11 +209,11 @@
         ctx.fillStyle = '#0a0e14'; 
         ctx.fillRect(0, 0, cw, ch);
         
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
-        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+        ctx.lineWidth = 0.3;
         for(let i=ripples.length-1; i>=0; i--) {
             let r = ripples[i]; 
-            r.r += 2 * dt; 
+            r.r += 1 * dt; 
             r.life -= 0.008 * dt;
             if(r.life <= 0) ripples.splice(i, 1);
             else {

@@ -1,0 +1,30 @@
+<img src="{{ .Get "src" }}" 
+     alt="{{ .Get "alt" }}" 
+     style="
+        /* 1. 居中对齐 (Center) */
+        {{ if eq (.Get "align") "center" }} 
+            display: block; 
+            margin-left: auto; 
+            margin-right: auto; 
+            margin-bottom: 20px;
+        {{ end }}
+
+        /* 2. 右浮动 (Right) */
+        {{ if eq (.Get "align") "right" }} 
+            float: right; 
+            margin-left: 20px; 
+            margin-bottom: 10px; 
+        {{ end }}
+
+        /* 3. 左浮动 (Left) */
+        {{ if eq (.Get "align") "left" }}  
+            float: left; 
+            margin-right: 20px; 
+            margin-bottom: 10px; 
+        {{ end }}
+        
+        /* 4. 高度和宽度控制 */
+        {{ if .Get "height" }} height: {{ .Get "height" }}; {{ end }}
+        {{ if .Get "width" }}  width: {{ .Get "width" }};   {{ end }}
+     "
+>
