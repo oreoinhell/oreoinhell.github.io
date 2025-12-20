@@ -1,0 +1,65 @@
+{{ define "main" }}
+
+{{ $scratch := newScratch }}
+{{ $scratch.Set "totalWordCount" 0 }}
+{{ range .Site.RegularPages }}
+    {{ $scratch.Add "totalWordCount" .WordCount }}
+{{ end }}
+{{ $totalWordCount := $scratch.Get "totalWordCount" }}
+
+<div class="container">
+    <div class="section-title">
+        <h1>{{ .Title }}</h1>
+    </div>
+
+    <div class="stats-dashboard">
+        <div class="stat-card">
+            <div class="stat-icon">📝</div>
+            <div class="stat-info">
+                <span class="stat-value">{{ len .Site.RegularPages }}</span>
+                <span class="stat-label">Total Posts</span>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-info">
+                <span class="stat-value">{{ div $totalWordCount 1000 | lang.FormatNumber 1 }}k</span>
+                <span class="stat-label">Words Written</span>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">🏷️</div>
+            <div class="stat-info">
+                {{ if eq .Data.Plural "tags" }}
+                    <span class="stat-value">{{ len .Site.Taxonomies.tags }}</span>
+                    <span class="stat-label">Total Tags</span>
+                {{ else }}
+                    <span class="stat-value">{{ len .Site.Taxonomies.categories }}</span>
+                    <span class="stat-label">Categories</span>
+                {{ end }}
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">🕒</div>
+            <div class="stat-info">
+                {{ range first 1 .Site.RegularPages }}
+                    <span class="stat-value" style="font-size: 1.2rem;">{{ .Date.Format "2006-01-02" }}</span>
+                {{ end }}
+                <span class="stat-label">Last Update</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="tag-cloud">
+        {{ range .Data.Terms.ByCount }}
+        <a href="{{ .Page.RelPermalink }}" class="tag-chip">
+            <span class="tag-name">{{ .Page.Title }}</span>
+            <span class="tag-count">{{ .Count }}</span>
+        </a>
+        {{ end }}
+    </div>
+</div>
+{{ end }}

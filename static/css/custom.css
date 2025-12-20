@@ -1,0 +1,245 @@
+/* =================================================================
+   1. 【地基】清空所有默认背景
+   ================================================================= */
+html, body, #app, #content, 
+#streamContainer, 
+#streamContainer .post-list-container,
+.post-head-wrapper, .side-container, .extra-container {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* =================================================================
+   2. 【卡片装修】核心样式 (雨/烟/星的载体)
+   ================================================================= */
+/* 这里的选择器囊括了首页列表卡片、文章页、侧边栏、目录 */
+.post, 
+.post-item, 
+.sidebar, 
+.toc {
+    /* --- 核心：背景色 --- */
+    /* 默认给个深色底，JS 会根据模式微调，但这里做个保底 */
+    background-color: rgba(30, 30, 30, 0.85) !important;
+    
+    /* --- 核心：空间修复 (解决“没有余空”) --- */
+    box-sizing: border-box !important; /* 关键：让内边距算在宽度内，防止撑爆 */
+    padding: 30px !important;          /* 内边距：文字离边框的距离 */
+    margin-bottom: 30px !important;    /* 外边距：卡片之间的距离 */
+    
+    /* --- 核心：视觉特效 --- */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3) !important;
+    
+    /* --- 字体颜色强制修复 --- */
+    color: #e0e0e0 !important;
+}
+
+/* 针对移动端的额外保护 (防止卡片贴着手机屏幕边缘) */
+@media screen and (max-width: 768px) {
+    .post, .post-item {
+        margin-left: 10px !important;
+        margin-right: 10px !important;
+        padding: 20px !important; /* 移动端内边距稍微小一点 */
+    }
+}
+
+/* =================================================================
+   3. 【模式适配】日间/夜间模式微调
+   ================================================================= */
+
+/* --- 浅色模式 (Day Mode) --- */
+/* 当 body 没有 .night 类时 */
+body:not(.night) .post, 
+body:not(.night) .post-item,
+body:not(.night) .sidebar,
+body:not(.night) .toc {
+    /* 浅白半透明背景 */
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    color: #333 !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important;
+}
+/* 浅色模式链接颜色 */
+body:not(.night) a { color: #1976d2 !important; }
+
+/* --- 深色模式 (Night Mode) --- */
+/* 当 body 有 .night 类时 */
+body.night .post, 
+body.night .post-item,
+body.night .sidebar,
+body.night .toc {
+    background-color: rgba(30, 30, 30, 0.85) !important;
+    color: #e0e0e0 !important;
+}
+/* 深色模式链接颜色 */
+body.night a { color: #82aaff !important; }
+
+/* =================================================================
+   4. 【文字细节】确保标题清晰
+   ================================================================= */
+h1, h2, h3, .post-title {
+    margin-top: 0 !important; /* 去掉标题上方多余的空隙 */
+}
+body.night h1, body.night h2, body.night h3, body.night .post-title {
+    color: #ffffff !important;
+}
+body:not(.night) h1, body:not(.night) h2, body:not(.night) .post-title {
+    color: #000000 !important;
+}
+
+/* 标签云容器：让标签横向排列，自动换行 */
+.tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px; /* 标签之间的间距 */
+    justify-content: center; /* 居中显示，显得更聚气 */
+    padding: 40px 0;
+}
+
+/* 单个标签胶囊 */
+.tag-chip {
+    display: inline-flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.05); /* 浅灰背景 */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px; /* 圆润的胶囊形状 */
+    padding: 8px 16px;
+    text-decoration: none !important;
+    color: #555;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+}
+
+/* 鼠标悬停效果 */
+.tag-chip:hover {
+    background-color: #2a2a2a; /* 深色高亮 */
+    color: #fff;
+    transform: translateY(-2px); /* 微微上浮 */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* 数量角标 */
+.tag-count {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    margin-left: 8px;
+}
+
+/* 鼠标悬停时角标变色 */
+.tag-chip:hover .tag-count {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+
+body.night .tag-chip {
+    /* 深色背景下的胶囊底色：淡淡的半透明白 */
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: #ccc !important;
+}
+
+body.night .tag-chip:hover {
+    /* 悬停高亮：亮蓝色 */
+    background-color: #82aaff !important;
+    color: #fff !important;
+    border-color: #82aaff !important;
+}
+
+/* 同时修复仪表盘在深色模式下的边框颜色 */
+body.night .stat-card {
+    background-color: rgba(30, 30, 30, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* =================================================================
+   5. 【新增】标签页仪表盘 (Dashboard)
+   ================================================================= */
+
+/* 容器布局：网格排列，自动适应手机和电脑 */
+.stats-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 智能换行 */
+    gap: 20px;
+    margin-bottom: 40px;
+    padding: 0 10px;
+}
+
+/* 单个统计卡片 */
+.stat-card {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-radius: 12px;
+    
+    /* 继承你最喜欢的磨砂玻璃风格 */
+    background-color: rgba(255, 255, 255, 0.85); /* 浅色默认 */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 鼠标悬停特效 */
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* 图标样式 */
+.stat-icon {
+    font-size: 2.5rem;
+    margin-right: 15px;
+    opacity: 0.8;
+}
+
+/* 文字信息区域 */
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 数字样式 */
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #333;
+    font-family: 'Arial', sans-serif; /* 可以换成你喜欢的字体 */
+}
+
+/* 标签文字样式 */
+.stat-label {
+    font-size: 0.85rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 5px;
+}
+
+/* --- 深色模式适配 (Dark Mode) --- */
+body.night .stat-card {
+    background-color: rgba(30, 30, 30, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+body.night .stat-value {
+    color: #fff !important;
+    text-shadow: 0 0 10px rgba(255,255,255,0.3); /* 发光数字 */
+}
+
+body.night .stat-label {
+    color: #aaa !important;
+}

@@ -1,0 +1,9 @@
+<style>
+    {{ if .Get "meta" }} .post-meta { display: none !important; } {{ end }}
+    {{ if .Get "toc" }} .toc { display: none !important; } {{ end }}
+    {{ if .Get "nav" }} .post-pagination { display: none !important; } {{ end }}
+    {{ if .Get "comments" }} .post-comment-wrapper { display: none !important; } {{ end }}
+    {{ if .Get "all" }} 
+        .post-meta, .toc, .post-pagination, .post-comment-wrapper { display: none !important; } 
+    {{ end }}
+</style>

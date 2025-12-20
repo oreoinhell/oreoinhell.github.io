@@ -1,46 +1,20 @@
 ---
 title: "关于我"
 draft: false
-comments: false
+comment: false
 toc: false
 type: "about" 
 _build:
   list: never
   render: always
 ---
-<style>
-    /* 1. 隐藏右侧目录 (TOC) */
-    #toc-container, .toc {
-        display: none !important;
-    }
-
-    /* 2. 隐藏文章标题下方的发布时间/元数据 */
-    .post-meta {
-        display: none !important;
-    }
-
-    /* 3. 隐藏底部的 Giscus 评论区 */
-    .giscus, #comments {
-        display: none !important;
-    }
-
-    /* 4. 隐藏“上一篇/下一篇”导航链接 (新增) */
-    .post-pagination {
-        display: none !important;
-    }
-    
-    /* 可选：让文章内容居中并变宽 */
-    .post-content {
-        width: 100% !important;
-        max-width: none !important;
-    }
-</style>
+{{< hide all="true" >}}
 ## 你好，我是奥利奥 👋
 
 这里是我的深坑，用来存放我的胡思乱想，说不定会有同人？但我感觉还是放在ao3上好些。
 
 ### 关于本站
-其实我没有什么特别的理由建这个站，单纯觉得在当下的环境下，无论如何需要有这么个地方。路过的人光是从我更新内容的频率就很容易发现，我其实也没有那么多适合写成长文的内容。现在能想到可以写的就只有，呃，对某些事情与看过的东西的感想。说不定以后继续科研或者不科研可以学着写一点科普内容？
+其实我没有什么特别的理由建这个站，单纯觉得在当下的环境下，无论如何需要有这么个地方。路过的人光是从我更新内容的频率就很容易发现，我其实也没有那么多适合写成长文的内容。现在能想到可以写的就只有，呃，对某些事情与看过的东西的感想。说不定以后不论继续科研还是不科研都可以学着写一点科普内容？
 
 ### 兴趣爱好
 * 看各种各样的同人。我的ao3账号上有我的bookmark，你可以认为凡是出现在bookmark里的东西我都喜欢。

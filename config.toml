@@ -4,6 +4,7 @@ languageCode = "en-us"
 title = "奥利奥的深坑"
 copyright = "是的，这里都是oreoinhell写的，写起来还挺麻烦的。"
 theme = "diary"
+hasCJKLanguage = true
 
 # Generate sitemap in the public folder
 [sitemap]
@@ -28,8 +29,6 @@ theme = "diary"
     style = "perldoc"
     tabWidth = 4
 
-   [markup.goldmark.renderer]
-      unsafe = true
 
 [params]
 subtitle = "Themed by Diary."
@@ -37,6 +36,7 @@ enableGitalk = false
 enableGiscus = true
 favicon = "favicon.ico"
 enableReadingTime = true
+customCSS = ["css/custom.css"]
 
 # Microsoft Clarity (https://clarity.microsoft.com/) is a free user behavior recording and analytics tool
 clarity = "abcdefghzd"
@@ -47,20 +47,6 @@ enableTwitterCards = true
 title = "My Blog" # will set 'og:site_name'
 description = "My HomePage Description"  # will set 'og:description'
 
-[params.gitalk]
-  owner = "user"
-  repo = "repo name"
-  client_id = "your client id"
-  client_secret = "your client secret"
-[taxonomies]
-   tag = "tags"
-   category = "categories"
-
-[params.utterances]
-repo="your repo"
-term="[ENTER TERM HERE]"
-label="your label"
-theme="github-light"
 
 # Please visit https://giscus.app/ to generate settings.
 [params.giscus]
@@ -94,10 +80,14 @@ url = "https://archiveofourown.org/users/oreo_one"
 name = "AO3"
 weight = 4
 [[menu.main]]
+url = "/stargazing"
+name = "Starmap"
+weight = 5
+[[menu.main]]
 url = "/index.xml"
 name = "RSS Feed"
-weight = 5
+weight = 6
 [[menu.main]]
 url = "/about"
 name = "About Me"
-weight = 6
+weight = 7
