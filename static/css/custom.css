@@ -247,3 +247,84 @@ body.night .stat-label {
     opacity: 1;               /* 鼠标放上去变回 100% */
     box-shadow: 0 0 15px rgba(255,255,255,0.3); /* 顺便加个发光效果 */
 }
+
+/* =================================================================
+   8. 【侧边栏】施工现场进度条
+   ================================================================= */
+.sidebar-progress-container {
+    margin-top: 30px; 
+    padding: 0 10px;
+    border-top: 1px solid rgba(0,0,0,0.05); /* 稍微加个顶部分割线 */
+    padding-top: 20px;
+}
+
+body.night .sidebar-progress-container {
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.sidebar-progress-title {
+    opacity: 0.8;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: #555; /* 亮色模式文字颜色 */
+}
+
+body.night .sidebar-progress-title {
+    color: #ccc; /* 暗色模式文字颜色 */
+}
+
+.progress-box { 
+    margin-bottom: 15px; 
+    font-size: 0.85em; 
+    color: #666; 
+}
+
+body.night .progress-box {
+    color: #aaa;
+}
+
+.progress-bar {
+    background-color: rgba(0,0,0,0.1); /* 槽的底色：半透明黑 */
+    border-radius: 10px;
+    height: 6px; /* 稍微细一点更精致 */
+    width: 100%;
+    margin-top: 6px;
+    overflow: hidden;
+}
+
+body.night .progress-bar {
+    background-color: rgba(255,255,255,0.15); /* 暗色模式槽底色：半透明白 */
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.6s ease;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.side-container {
+    /* 1. 限制最大高度为屏幕高度 */
+    max-height: 100vh !important;
+    
+    /* 2. 关键：内容超出时允许上下滚动 */
+    overflow-y: auto !important;
+    
+    /* 3. 底部多留点空隙，防止最后一个元素贴着屏幕边缘 */
+    padding-bottom: 80px !important; 
+}
+
+/* --- (可选) 隐藏滚动条，保持界面纯净美观 --- */
+/* Chrome, Safari, Opera */
+.side-container::-webkit-scrollbar {
+    display: none; 
+}
+/* IE, Edge */
+.side-container {
+    -ms-overflow-style: none;  
+}
+/* Firefox */
+.side-container {
+    scrollbar-width: none;  
+}

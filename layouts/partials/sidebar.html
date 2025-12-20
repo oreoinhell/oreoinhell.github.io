@@ -1,0 +1,77 @@
+<div id="sideContainer" class="side-container">
+    {{ if eq .Title .Site.Title}}
+    <a class="a-block nav-head active" href="{{ "" | absLangURL }}">
+    {{ else }}
+    <a class="a-block nav-head false" href="{{ "" | absLangURL }}">
+    {{ end }}
+        <div class="nav-title">
+            {{.Site.Title}}
+        </div>
+        {{ with .Site.Params.subtitle }}
+        <div class="nav-subtitle">
+            {{.}}
+        </div>
+        {{ end }}
+    </a>
+
+    <div class="nav-link-list">
+        {{ $current := .RelPermalink | absLangURL }}
+        {{ range .Site.Menus.main }}
+            {{$actived := "false"}}
+            <!-- A problem caused by slash: if you use "eq" directly, you will get a result of "/tags/" and "/tags" -->
+            {{if hasPrefix  $current (.URL|absLangURL)}}
+                {{$actived = "active"}}
+            {{end}}
+            {{ if .HasChildren }}
+            <div class="a-block" class="nav-link-item {{$actived}}" v-on:click="isHidden = !isHidden">
+                {{ .Name }}
+                <div class="nav-link-subitem" v-if="!isHidden">
+                    {{ range .Children }}
+                    <li><a href="{{ .URL }}"> {{ .Name }}</a></li>
+                    {{ end }}
+                </div>
+            </div>
+            {{ else }}
+            <!--<a class="a-block nav-link-item {{$actived}}" href="{{ .URL }}">-->
+            <a class="a-block nav-link-item {{ $actived }}" href="{{ .URL }}">
+                {{ .Name }}
+            </a>
+            {{ end }}
+        {{ end }}
+    </div>
+
+    <div class="nav-footer">
+        {{partial "copyright.html" .}}
+    </div>
+    
+	{{ if .Site.Data.todo }}
+     <div class="sidebar-progress-container">
+       <h4 class="sidebar-progress-title">🚧 施工现场</h4>
+    
+    {{ range .Site.Data.todo }}
+    <div class="progress-box">
+        <div style="display:flex; justify-content:space-between;">
+            <span>{{ .name }}</span>
+            <span style="opacity:0.7;">{{ .percent }}%</span>
+        </div>
+        <div class="progress-bar">
+            {{ $bg := "linear-gradient(90deg, #4facfe 0%, #00f2fe 100%)" }}
+            
+            {{ if eq .color "green" }}{{ $bg = "linear-gradient(90deg, #43e97b 0%, #38f9d7 100%)" }}{{ end }}
+            
+            {{ if eq .color "pink"  }}{{ $bg = "linear-gradient(90deg, #ff9a9e 0%, #fecfef 100%)" }}{{ end }}
+            
+            {{ if eq .color "purple" }}{{ $bg = "linear-gradient(90deg, #667eea 0%, #764ba2 100%)" }}{{ end }}
+            
+            {{ if eq .color "yellow" }}{{ $bg = "linear-gradient(90deg, #f6d365 0%, #fda085 100%)" }}{{ end }}
+            
+            {{ if eq .color "red"    }}{{ $bg = "linear-gradient(90deg, #ff416c 0%, #ff4b2b 100%)" }}{{ end }}
+
+            <div class="progress-fill" style="width: {{ .percent }}%; background: {{ $bg | safeCSS }};"></div>
+        </div>
+    </div>
+    {{ end }}
+</div>
+{{ end }}
+	
+</div>

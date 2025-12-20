@@ -1,0 +1,15 @@
+- name: "Seasons翻译"
+  percent: 30
+  color: "blue"
+
+- name: "《奥卡姆剃刀》全本翻译"
+  percent: 10
+  color: "green"
+
+- name: "拉丁语自学ing"
+  percent: 15
+  color: "pink"
+
+- name: "咚耶的5+1"
+  percent: 16
+  color: "yellow"
