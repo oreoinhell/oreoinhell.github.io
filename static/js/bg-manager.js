@@ -1,12 +1,22 @@
 (function() {
-    // --- 1. 基础画布设置 ---
+    // --- 1. 基础画布设置 & 变量集中声明 (搬家到这里！) ---
     var canvas = document.createElement('canvas');
     canvas.id = 'bg-canvas';
     canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;';
     document.body.appendChild(canvas);
 
     const ctx = canvas.getContext('2d');
+    
+    // ✅ 所有变量都在这里先出生！
     let cw, ch, isMobile;
+    let stars = [], ripples = [];              // 从第210行搬来的
+    let lastRippleX, lastRippleY;              // 从第217行搬来的
+    let fireworks = [], particles = [], drops = [], splashes = [], hue = 120; // 从第268行搬来的
+    let lastTime = 0, randomTick = 0, pointerTick = 0; // 从第269行搬来的
+    let pointer = { x: -1000, y: -1000 };
+    let lastMoveTime = 0;
+
+    // --- 之后才是函数逻辑 ---
 
     function resizeCanvas() {
         cw = window.innerWidth; 
@@ -14,15 +24,15 @@
         canvas.width = cw; 
         canvas.height = ch;
         isMobile = cw < 768;
+        // 现在这里调用 initStars 就安全了，因为 stars 已经在上面定义过了
         if (typeof getBackgroundState === 'function' && getBackgroundState() === 'RIPPLES') initStars();
     }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    // 交互状态
-    let pointer = { x: -1000, y: -1000 };
-    let lastMoveTime = 0;
     
+    // 监听窗口大小
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas(); // 这里运行时，stars 已经存在了，不会报错！
+
+    // 交互状态更新
     function updatePointer(x, y) {
         pointer.x = x; 
         pointer.y = y;
@@ -38,21 +48,17 @@
     // --- 2. 状态判定 ---
     function getBackgroundState() {
         const isNight = document.body.classList.contains('night');
-        
-        // 春节日期 (年份: "MM-DD")
         const LUNAR_NEW_YEARS = { 
             2025: "01-29", 2026: "02-17", 2027: "02-06", 2028: "01-26", 2029: "02-13" 
         };
-        
         const today = new Date();
         const year = today.getFullYear();
         const dateStr = (today.getMonth() + 1).toString().padStart(2, '0') + "-" + today.getDate().toString().padStart(2, '0');
-        
         const isHoliday = (dateStr === "01-01" || dateStr === LUNAR_NEW_YEARS[year]);
 
-        if (!isNight) return 'RAIN';           // 浅色模式 -> 雨帘
-        if (isHoliday) return 'FIREWORKS';     // 深色 + 节日 -> 烟花
-        return 'RIPPLES';                      // 深色 + 平日 -> 星空涟漪
+        if (!isNight) return 'RAIN';           
+        if (isHoliday) return 'FIREWORKS';     
+        return 'RIPPLES';                      
     }
 
     // --- 3. 核心特效类 ---
@@ -100,17 +106,11 @@
             this.y = y;
             this.coordinates = [[x,y], [x,y], [x,y], [x,y]];
             this.angle = random(0, Math.PI * 2); 
-            
             this.speed = random(8, 20); 
-            
-            // 【改动点】摩擦力减小，飞得更远
             this.friction = 0.97; 
-            
             this.gravity = 1; 
             this.hue = random(hue - 50, hue + 50);
             this.alpha = 1; 
-            
-            // 【改动点】衰减变慢，存活更久 (拖尾更长)
             this.decay = random(0.022, 0.052); 
         }
         update(index, dt) {
@@ -120,13 +120,11 @@
             this.x += Math.cos(this.angle) * this.speed * dt;
             this.y += (Math.sin(this.angle) * this.speed + this.gravity) * dt;
             this.alpha -= this.decay * dt;
-            
             if (this.alpha <= this.decay) particles.splice(index, 1);
         }
         draw() {
             ctx.beginPath(); 
             ctx.strokeStyle = `hsla(${this.hue}, 100%, 60%, ${this.alpha})`;
-            // 加粗线条
             ctx.lineWidth = 2;
             ctx.moveTo(this.coordinates[this.coordinates.length-1][0], this.coordinates[this.coordinates.length-1][1]);
             ctx.lineTo(this.x, this.y); 
@@ -135,28 +133,25 @@
         }
     }
 
-// --- 4. 新增：飞溅水珠类 (用于“划碎”效果) ---
     class Splash {
         constructor(x, y) {
             this.x = x;
             this.y = y;
-            // 随机向四周炸开
             this.vx = (Math.random() - 0.5) * 10;
             this.vy = (Math.random() - 0.5) * 10;
             this.gravity = 0.5;
-            this.life = 1.0; // 存活时间
-            this.decay = random(0.03, 0.05); // 消失速度
+            this.life = 1.0; 
+            this.decay = random(0.03, 0.05); 
         }
         update(dt) {
             this.x += this.vx * dt;
             this.y += this.vy * dt;
-            this.vy += this.gravity * dt; // 重力下坠
+            this.vy += this.gravity * dt; 
             this.life -= this.decay * dt;
         }
         draw() {
             ctx.globalAlpha = this.life;
             ctx.fillStyle = 'rgba(100, 160, 255, 0.8)';
-            // 画成小小的水珠
             ctx.beginPath();
             ctx.arc(this.x, this.y, 1.5, 0, Math.PI * 2);
             ctx.fill();
@@ -164,7 +159,6 @@
         }
     }
 
-    // --- 5. 修改：雨滴逻辑 (撞击破碎) ---
     class Drop {
         constructor() { this.reset(true); }
         reset(randomY) {
@@ -175,23 +169,15 @@
         }
         update(dt) {
             this.y += this.vy * dt; 
-            
-            // 【核心修改：划碎逻辑】
-            // 如果雨滴碰到了鼠标附近
             if (Date.now() - lastMoveTime < 200) {
                 let dx = this.x - pointer.x;
                 let dy = this.y - pointer.y;
-                // 判定范围：40px (像一把剑的宽度)
                 if (Math.abs(dx) < 40 && Math.abs(dy) < 40) {
-                    // 1. 产生飞溅效果 (生成 3-5 个小水珠)
                     let splashCount = Math.floor(random(3, 6));
                     createSplashes(this.x, this.y, splashCount);
-                    
-                    // 2. 这滴雨“死”了，立刻在顶部重置
                     this.reset(false);
                 }
             }
-            
             if (this.y > ch) this.reset(false);
         }
         draw() {
@@ -204,21 +190,21 @@
         }
     }
 
-    // --- 6. 星空逻辑 ---
-    let stars = [], ripples = [];
+    // --- 6. 星空逻辑 (变量已经搬家，这里只留函数) ---
     function initStars() {
         stars = [];
         for(let i=0; i<200; i++) {
             stars.push({ x: Math.random()*cw, y: Math.random()*ch, size: Math.random()*2, alpha: Math.random(), baseAlpha: Math.random() });
         }
     }
-    let lastRippleX, lastRippleY;
+
     function addRipple(x, y) {
         if (!lastRippleX || Math.hypot(x - lastRippleX, y - lastRippleY) > 50) {
             ripples.push({ x: x, y: y, r: 0, life: 1 });
             lastRippleX = x; lastRippleY = y;
         }
     }
+
     function drawRipples(dt) {
         ctx.fillStyle = '#0a0e14'; 
         ctx.fillRect(0, 0, cw, ch);
@@ -251,15 +237,11 @@
     }
 
     // --- 7. 主循环 ---
-    let fireworks = [], particles = [], drops = [], splashes = [], hue = 120;
-    let lastTime = 0, randomTick = 0, pointerTick = 0;
-
     function createParticles(x, y) {
         let count = isMobile ? 20 : 50;
         while(count--) particles.push(new Particle(x, y));
     }
 
-    // 创建飞溅水珠
     function createSplashes(x, y, count) {
         while(count--) splashes.push(new Splash(x, y));
     }
@@ -323,6 +305,7 @@
         }
     }
     
+    // 初始化
     initStars();
     loop(0);
 })();
