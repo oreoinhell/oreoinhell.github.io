@@ -358,3 +358,24 @@ body.night .progress-bar {
         display: block !important;
     }
 }
+
+/* =================================================================
+   11. 【修复】手机抽屉菜单在深色模式下的字体颜色
+   ================================================================= */
+
+/* 1. 修复标题 "🚧 施工现场" */
+body.night .drawer-menu .sidebar-progress-title {
+    color: #e0e0e0 !important; /* 亮白色 */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5); /* 加点阴影更清晰 */
+}
+
+/* 2. 修复任务名称和百分比数字 */
+body.night .drawer-menu .progress-box,
+body.night .drawer-menu .progress-box span {
+    color: #d0d0d0 !important; /* 次级亮白 */
+}
+
+/* --- 额外优化：让进度条槽也适应深色 --- */
+body.night .drawer-menu .progress-bar {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}

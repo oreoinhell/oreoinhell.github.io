@@ -1,0 +1,29 @@
+	{{ if .Site.Data.todo }}
+     <div class="sidebar-progress-container">
+       <h4 class="sidebar-progress-title">🚧 施工现场</h4>
+    
+    {{ range .Site.Data.todo }}
+    <div class="progress-box">
+        <div style="display:flex; justify-content:space-between;">
+            <span>{{ .name }}</span>
+            <span style="opacity:0.7;">{{ .percent }}%</span>
+        </div>
+        <div class="progress-bar">
+            {{ $bg := "linear-gradient(90deg, #4facfe 0%, #00f2fe 100%)" }}
+            
+            {{ if eq .color "green" }}{{ $bg = "linear-gradient(90deg, #43e97b 0%, #38f9d7 100%)" }}{{ end }}
+            
+            {{ if eq .color "pink"  }}{{ $bg = "linear-gradient(90deg, #ff9a9e 0%, #fecfef 100%)" }}{{ end }}
+            
+            {{ if eq .color "purple" }}{{ $bg = "linear-gradient(90deg, #667eea 0%, #764ba2 100%)" }}{{ end }}
+            
+            {{ if eq .color "yellow" }}{{ $bg = "linear-gradient(90deg, #f6d365 0%, #fda085 100%)" }}{{ end }}
+            
+            {{ if eq .color "red"    }}{{ $bg = "linear-gradient(90deg, #ff416c 0%, #ff4b2b 100%)" }}{{ end }}
+
+            <div class="progress-fill" style="width: {{ .percent }}%; background: {{ $bg | safeCSS }};"></div>
+        </div>
+    </div>
+    {{ end }}
+</div>
+{{ end }}
