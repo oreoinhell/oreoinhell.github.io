@@ -328,3 +328,33 @@ body.night .progress-bar {
 .side-container {
     scrollbar-width: none;  
 }
+
+/* =================================================================
+   10. 【修复】手机端列表图片“通栏”显示 (去除内边距框)
+   ================================================================= */
+@media screen and (max-width: 768px) {
+    /* 选中文章列表卡片里的图片容器 */
+    /* 这里列出了几种常见主题的图片类名，确保能命中 */
+    .post-item .featured-image,
+    .post-item .post-cover, 
+    .post-item img { 
+        
+        /* 1. 核心：用负边距“吃掉”卡片的内边距 (padding: 20px) */
+        /* 这里的数值必须和 card padding 保持一致 */
+        margin-left: -20px !important;
+        margin-right: -20px !important;
+        margin-top: -20px !important;
+        
+        /* 2. 宽度自动补偿 (100% + 左右两边的 20px) */
+        width: calc(100% + 40px) !important;
+        max-width: calc(100% + 40px) !important;
+        
+        /* 3. 完美贴合圆角 */
+        /* 图片的左上/右上角要和卡片一样圆，下面则是直角 */
+        border-radius: 12px 12px 0 0 !important;
+        
+        /* 4. 确保图片显示正常，不被拉伸变形 */
+        object-fit: cover !important; 
+        display: block !important;
+    }
+}

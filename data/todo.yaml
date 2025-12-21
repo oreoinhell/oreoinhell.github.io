@@ -1,5 +1,5 @@
 - name: "Seasons翻译"
-  percent: 30
+  percent: 65
   color: "blue"
 
 - name: "《奥卡姆剃刀》全本翻译"
@@ -11,5 +11,5 @@
   color: "pink"
 
 - name: "咚耶的5+1"
-  percent: 16
+  percent: 14
   color: "yellow"
