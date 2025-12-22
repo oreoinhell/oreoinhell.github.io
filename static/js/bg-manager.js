@@ -11,7 +11,7 @@
     let cw, ch, isMobile;
     let stars = [], ripples = [];              // 从第210行搬来的
     let lastRippleX, lastRippleY;              // 从第217行搬来的
-    let fireworks = [], particles = [], drops = [], splashes = [], hue = 120; // 从第268行搬来的
+    let fireworks = [], particles = [], drops = [], splashes = [], rainRipples = [], hue = 120; // 从第268行搬来的
     let lastTime = 0, randomTick = 0, pointerTick = 0; // 从第269行搬来的
     let pointer = { x: -1000, y: -1000 };
     let lastMoveTime = 0;
@@ -160,35 +160,115 @@
             ctx.globalAlpha = 1.0;
         }
     }
+    
+    // --- 新增：雨水落地涟漪类 ---
+    class RainRipple {
+        // 👇 构造函数新增 dropLen 参数
+        constructor(x, y, dropLen) {
+            this.x = x;
+            this.y = y;
+            this.r = 1;        // 初始半径
+            
+            // ✨ 物理关联魔法：
+            // 1. 速度：雨滴越长(max 80)，扩散越快；雨滴越短(min 25)，扩散越慢
+            //    (计算公式：长度 / 60 -> 大约在 0.4 到 1.3 之间)
+            this.speed = dropLen / 60; 
+
+            // 2. 初始透明度：大雨滴的涟漪更明显
+            this.a = dropLen / 80; 
+            if (this.a > 1) this.a = 1; // 封顶
+
+            // 3. 线条粗细：大雨滴涟漪稍微粗一点点
+            this.width = dropLen / 40; 
+        }
+
+        update(dt) {
+            this.r += this.speed * dt; // 使用计算出来的动态速度
+            this.a *= 0.985;            // 衰减
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(160, 196, 255, ${this.a})`;
+            
+            // 👇 使用动态计算的粗细
+            ctx.lineWidth = this.width;
+            
+            // 画椭圆
+            ctx.ellipse(this.x, this.y, this.r, this.r * 0.4, 0, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+    }
 
     class Drop {
         constructor() { this.reset(true); }
-        reset(randomY) {
+        
+        reset(isInit) {
             this.x = Math.random() * cw; 
-            this.y = randomY ? Math.random() * ch : -60;
+            
+            // 1. 设定“地面”高度 (寿命)
+            this.endY = random(ch * 0.43, ch * 1.01); // 稍微提高一点下限，让画面更有层次
+
+            // 2. 设定初始位置
+            // isInit ? 随机分布在天上 : 从屏幕顶端上方一点点开始
+            this.y = isInit ? Math.random() * this.endY : -60;
+            
             this.vy = random(6, 10); 
-            this.len = random(25, 80);
+            this.len = random(25, 70);
+            
+            // 3. 标记：这滴雨是不是已经溅起过涟漪了？(防止一滴雨触发多次涟漪)
+            this.hasRippled = false; 
         }
+
         update(dt) {
+            // 雨滴继续无脑往下掉 (y 是雨滴的尾巴/顶端)
             this.y += this.vy * dt; 
+            
+            // 计算雨滴的“头” (最下面那一点)
+            let dropTip = this.y + this.len;
+
+            // --- 交互逻辑 (鼠标飞溅) ---
             if (Date.now() - lastMoveTime < 200) {
                 let dx = this.x - pointer.x;
                 let dy = this.y - pointer.y;
+                // 如果鼠标碰到了雨滴的任何部分
                 if (Math.abs(dx) < 40 && Math.abs(dy) < 40) {
-                    let splashCount = Math.floor(random(3, 6));
-                    createSplashes(this.x, this.y, splashCount);
+                    createSplashes(this.x, this.y, Math.floor(random(3, 6)));
                     this.reset(false);
+                    return; // 既然重置了，就不用执行下面的逻辑了
                 }
             }
-            if (this.y > ch) this.reset(false);
+
+            // --- 💧 涟漪触发逻辑 ---
+            // 如果“头”撞到了“地面”，并且还没触发过涟漪
+            if (dropTip >= this.endY && !this.hasRippled) {
+                rainRipples.push(new RainRipple(this.x, this.endY, this.len));
+                this.hasRippled = true; // 标记一下，下次别再触发了
+            }
+
+            // --- 💀 销毁逻辑 ---
+            // 只有当雨滴的“尾巴”(y) 也完全钻入地下后，才算彻底结束
+            if (this.y > this.endY) {
+                this.reset(false);
+            }
         }
+
         draw() {
             ctx.beginPath(); 
             ctx.strokeStyle = 'rgba(130, 170, 255, 0.35)'; 
             ctx.lineWidth = 2;
-            ctx.moveTo(this.x, this.y); 
-            ctx.lineTo(this.x, this.y + this.len); 
-            ctx.stroke();
+
+            // --- ✨ 核心魔法：视觉截断 ---
+            // 我们计算实际应该画到的终点：
+            // 正常情况下是 y + len，但不能超过 endY (地面)
+            let visualEndY = Math.min(this.y + this.len, this.endY);
+
+            // 只有当雨滴还有一部分在地面之上时才画
+            if (visualEndY > this.y) {
+                ctx.moveTo(this.x, this.y);      // 从尾巴(上)
+                ctx.lineTo(this.x, visualEndY);  // 画到视觉终点(下)
+                ctx.stroke();
+            }
         }
     }
 
@@ -301,7 +381,16 @@
                 s.draw();
                 if (s.life <= 0) splashes.splice(i, 1);
             }
-            
+
+            // 👇 新增：更新落地涟漪 (RainRipple)
+            for (let i = rainRipples.length - 1; i >= 0; i--) {
+                let r = rainRipples[i];
+                r.update(dt);
+                r.draw();
+                // 如果透明度太低看不见了，就删掉
+                if (r.a < 0.01) rainRipples.splice(i, 1);
+            }
+ 
         } else {
             drawRipples(dt);
         }
