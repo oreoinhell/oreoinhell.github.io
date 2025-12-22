@@ -1,0 +1,29 @@
+{{ define "main" }}
+
+    <div class="liberated-year-title">
+        <a href="{{ .Parent.RelPermalink }}">{{.Parent.Title}}</a> / {{ .Title }} 
+    </div>
+    <div class="post-list-container post-list-container-shadow" style="min-height: auto; margin-bottom: 40px; border-radius: 12px;">
+        {{ range .Paginator.Pages }}
+        <a href="{{ .RelPermalink }}" class="a-block">
+            <div class="post-item-wrapper">
+                <div class="post-item post-item-no-gaps">
+                    <div class="post-item-info-wrapper">
+                        <div class="post-item-title">
+                            {{.Title}}
+                        </div>
+                        {{ partial "post-item-meta.html" . }}
+                    </div>
+                </div>
+            </div>
+        </a>
+        {{ end }}
+    </div>
+
+    {{ if .Paginator.HasNext }}
+    <div class="pagination-bar-container" style="position: static; width: 100%; height: auto; padding: 20px 0; background: none;">
+        {{ partial "paginator.html" . }}
+    </div>
+    {{ end }}
+
+{{ end }}

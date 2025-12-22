@@ -588,3 +588,52 @@ body.night .dot-next {
     background: #6495ed;
     box-shadow: 0 0 10px #6495ed;
 }
+
+/* =================================================================
+   10. 解放大title
+   ================================================================= */
+
+.liberated-year-title {
+    /* 字体样式 */
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 2.5rem;
+    font-weight: 900;
+    
+    /* 颜色 (星空上的亮色) */
+    color: #fff;
+    opacity: 0.9;
+    
+    /* 位置调整 */
+    margin-top: 60px;
+    margin-bottom: 20px;
+    padding-left: 30px;
+    
+    /* 装饰 */
+    text-shadow: 0 0 20px rgba(100, 149, 237, 0.6); /* 蓝色光晕 */
+    border-left: 8px solid #6495ed; /* 左侧亮条 */
+    line-height: 1;
+}
+
+/* 浅色模式适配 (如果白天背景是白的，字就要深一点) */
+body:not(.night) .liberated-year-title {
+    color: #2c3e50;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+    border-left-color: #2c3e50;
+}
+
+/* =================================================================
+   11. 【全局字体】中文字体美化 (方案一：文艺宋体)
+   ================================================================= */
+body {
+    /* 英文用 Georgia (经典的衬线体)，中文优先用 宋体 */
+    font-family: "Georgia", "Times New Roman", "Songti SC", "SimSun", "STSong", "AR PL New Sung", serif !important;
+    
+    /* 稍微增加一点行高和字间距，让阅读更透气 */
+    line-height: 1.8 !important;
+    letter-spacing: 0.02em !important;
+}
+
+/* 移动端优化：手机上宋体可能太细，加粗一点点 */
+@media screen and (max-width: 768px) {
+    body { font-weight: 500; }
+}
