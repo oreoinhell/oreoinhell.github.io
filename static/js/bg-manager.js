@@ -184,7 +184,7 @@
 
         update(dt) {
             this.r += this.speed * dt; // 使用计算出来的动态速度
-            this.a *= 0.97;            // 衰减
+            this.a *= 0.95;            // 衰减
         }
 
         draw() {
