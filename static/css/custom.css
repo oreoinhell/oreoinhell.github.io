@@ -14,13 +14,13 @@ html, body, #app, #content,
    2. 【卡片装修】核心样式 (雨/烟/星的载体)
    ================================================================= */
 /* 这里的选择器囊括了首页列表卡片、文章页、侧边栏、目录 */
-.post, 
-.post-item, 
-.sidebar, 
-.toc {
+body.night .post, 
+body.night .post-item, 
+body.night .sidebar, 
+body.night .toc {
     /* --- 核心：背景色 --- */
     /* 默认给个深色底，JS 会根据模式微调，但这里做个保底 */
-    background-color: rgba(30, 30, 30, 0.85) !important;
+    background-color: rgba(30, 30, 30, 0.75) !important;
     
     /* --- 核心：空间修复 (解决“没有余空”) --- */
     box-sizing: border-box !important; /* 关键：让内边距算在宽度内，防止撑爆 */
@@ -38,6 +38,30 @@ html, body, #app, #content,
     color: #e0e0e0 !important;
 }
 
+.post, 
+.post-item, 
+.sidebar, 
+.toc {
+    /* --- 核心：背景色 --- */
+    /* 默认给个浅色底，JS 会根据模式微调，但这里做个保底 */
+    background-color: rgba(255, 255, 255, 0.75) !important;
+    
+    /* --- 核心：空间修复 (解决“没有余空”) --- */
+    box-sizing: border-box !important; /* 关键：让内边距算在宽度内，防止撑爆 */
+    padding: 30px !important;          /* 内边距：文字离边框的距离 */
+    margin-bottom: 30px !important;    /* 外边距：卡片之间的距离 */
+    
+    /* --- 核心：视觉特效 --- */
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 6px 10px rgba(0,0,0,0.1) !important;
+    
+    /* --- 字体颜色强制修复 --- */
+    color: #000000 !important;
+}
+
 /* 针对移动端的额外保护 (防止卡片贴着手机屏幕边缘) */
 @media screen and (max-width: 768px) {
     .post, .post-item {
@@ -46,38 +70,6 @@ html, body, #app, #content,
         padding: 20px !important; /* 移动端内边距稍微小一点 */
     }
 }
-
-/* =================================================================
-   3. 【模式适配】日间/夜间模式微调
-   ================================================================= */
-
-/* --- 浅色模式 (Day Mode) --- */
-/* 当 body 没有 .night 类时 */
-body:not(.night) .post, 
-body:not(.night) .post-item,
-body:not(.night) .sidebar,
-body:not(.night) .toc {
-    /* 浅白半透明背景 */
-    background-color: rgba(255, 255, 255, 0.85) !important;
-    color: #333 !important;
-    border: 1px solid rgba(0, 0, 0, 0.05) !important;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important;
-}
-/* 浅色模式链接颜色 */
-body:not(.night) a { color: #1976d2 !important; }
-
-/* --- 深色模式 (Night Mode) --- */
-/* 当 body 有 .night 类时 */
-body.night .post, 
-body.night .post-item,
-body.night .sidebar,
-body.night .toc {
-    background-color: rgba(30, 30, 30, 0.85) !important;
-    color: #e0e0e0 !important;
-}
-/* 深色模式链接颜色 */
-body.night a { color: #82aaff !important; }
-
 
 /* 标签云容器：让标签横向排列，自动换行 */
 .tag-cloud {
@@ -238,7 +230,7 @@ body.night .stat-label {
 
 /* 让正文图片平时微透明 */
 .post-content img {
-    opacity: 0.85;            /* 平时 85% 透明度 */
+    opacity: 0.75;            /* 平时 75% 透明度 */
     transition: opacity 0.3s; /* 变化过程要丝滑 */
 }
 
@@ -249,7 +241,7 @@ body.night .stat-label {
 }
 
 /* =================================================================
-   8. 【侧边栏】施工现场进度条
+   6. 【侧边栏】施工现场进度条
    ================================================================= */
 .sidebar-progress-container {
     margin-top: 30px; 
@@ -315,7 +307,7 @@ body.night .progress-bar {
     padding-bottom: 80px !important; 
 }
 
-/* --- (可选) 隐藏滚动条，保持界面纯净美观 --- */
+/* --- 隐藏滚动条，保持界面纯净美观 --- */
 /* Chrome, Safari, Opera */
 .side-container::-webkit-scrollbar {
     display: none; 
@@ -330,7 +322,7 @@ body.night .progress-bar {
 }
 
 /* =================================================================
-   10. 【修复】手机抽屉菜单在深色模式下的字体颜色
+   7. 【修复】手机抽屉菜单在深色模式下的字体颜色
    ================================================================= */
 
 /* 1. 修复标题 "🚧 施工现场" */
@@ -351,9 +343,9 @@ body.night .drawer-menu .progress-bar {
 }
 
 /* =================================================================
-   11. 【修复】去除 post-item-wrapper 的多余背景 (解决双层框问题)
+   10. 【修复】去除 post-item-wrapper 的多余背景 (解决双层框问题)
    ================================================================= */
-.post-item-wrapper {
+.post-item-wrapper,.post-item-info-wrapper {
     /* 1. 外层容器平时完全隐身 */
     background: transparent !important;
     background-color: transparent !important;
@@ -369,10 +361,10 @@ body.night .post-item-wrapper:hover .post-item {
     transform: translateY(-5px) !important;
     
     /* 加强阴影 (发光感) */
-    box-shadow: 0 8px 20px rgba(60,60,60,0.5) !important;
+    box-shadow: 0 8px 20px rgba(60,60,60,0.3) !important;
     
     /* (可选) 如果你希望悬停时卡片稍微变亮一点，取消下面这行的注释 */
-    background-color: rgba(50, 50, 50, 0.9) !important; */
+    background-color: rgba(50, 50, 50, 0.75) !important; */
 
 }
 
@@ -381,10 +373,10 @@ body.night .post-item-wrapper:hover .post-item {
     transform: translateY(-5px) !important;
     
     /* 加强阴影 (发光感) */
-    box-shadow: 0 8px 20px rgba(80,80,80,0.5) !important;
+    box-shadow: 0 8px 20px rgba(80,80,80,0.3) !important;
     
     /* (可选) 如果你希望悬停时卡片稍微变亮一点，取消下面这行的注释 */
-    background-color: rgba(230, 230, 230, 0.9) !important; */
+    background-color: rgba(230, 230, 230, 0.75) !important; */
 
 }
 /* 3. 确保里面的卡片平滑过渡，不僵硬 */

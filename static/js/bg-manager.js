@@ -48,13 +48,15 @@
     // --- 2. 状态判定 ---
     function getBackgroundState() {
         const isNight = document.body.classList.contains('night');
-        const LUNAR_NEW_YEARS = { 
-            2025: "01-29", 2026: "02-17", 2027: "02-06", 2028: "01-26", 2029: "02-13" 
-        };
         const today = new Date();
         const year = today.getFullYear();
         const dateStr = (today.getMonth() + 1).toString().padStart(2, '0') + "-" + today.getDate().toString().padStart(2, '0');
-        const isHoliday = (dateStr === "01-01" || dateStr === LUNAR_NEW_YEARS[year]);
+        var todayShort = dateStr;
+        var todayLong = year + '-' + dateStr;
+
+        var targetDates = window.fireworkDates || [];
+
+        const isHoliday = (targetDates.includes(todayShort) || targetDates.includes(todayLong));
 
         if (!isNight) return 'RAIN';           
         if (isHoliday) return 'FIREWORKS';     
@@ -165,7 +167,7 @@
             this.x = Math.random() * cw; 
             this.y = randomY ? Math.random() * ch : -60;
             this.vy = random(6, 10); 
-            this.len = random(35, 60);
+            this.len = random(25, 80);
         }
         update(dt) {
             this.y += this.vy * dt; 
@@ -183,7 +185,7 @@
         draw() {
             ctx.beginPath(); 
             ctx.strokeStyle = 'rgba(130, 170, 255, 0.35)'; 
-            ctx.lineWidth = 1.5;
+            ctx.lineWidth = 2;
             ctx.moveTo(this.x, this.y); 
             ctx.lineTo(this.x, this.y + this.len); 
             ctx.stroke();

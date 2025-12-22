@@ -1,6 +1,14 @@
 <head>
 <title>{{.Title}}</title>
 
+<script>
+    window.fireworkDates = [
+        {{ range .Site.Data.fireworks }}
+            "{{ . }}",
+        {{ end }}
+    ];
+</script>
+
 {{ $description := .Params.description}}
 {{if .IsHome}}
   {{ $description = .Site.Params.description}}
