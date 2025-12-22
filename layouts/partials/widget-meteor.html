@@ -1,0 +1,87 @@
+<div id="meteor-trigger" class="meteor-fab" title="打开流星雨观测站">
+    <span class="fab-icon">🔭</span>
+</div>
+
+<div id="meteor-panel" class="meteor-popup">
+    <div class="meteor-header">
+        <h4>🌠 <span id="meteor-year"></span> 观测表</h4>
+        <span class="close-meteor">×</span>
+    </div>
+    
+    <div class="meteor-list-scroll">
+        {{ range .Site.Data.meteors }}
+        <div class="meteor-item-small" data-date="{{ .date }}">
+            <div class="meteor-icon">{{ .icon }}</div>
+            <div class="meteor-info">
+                <div class="meteor-name">{{ .name }}</div>
+                <div class="meteor-date">{{ .date }}</div>
+            </div>
+            <div class="meteor-status"></div>
+        </div>
+        {{ end }}
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const trigger = document.getElementById('meteor-trigger');
+    const panel = document.getElementById('meteor-panel');
+    const closeBtn = document.querySelector('.close-meteor');
+    const yearSpan = document.getElementById('meteor-year'); // 获取年份容器
+    
+    // --- 面板开关逻辑 ---
+    trigger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        panel.classList.toggle('show');
+        trigger.classList.toggle('active');
+    });
+    closeBtn.addEventListener('click', function() {
+        panel.classList.remove('show');
+        trigger.classList.remove('active');
+    });
+    document.addEventListener('click', function(e) {
+        if (!panel.contains(e.target) && !trigger.contains(e.target)) {
+            panel.classList.remove('show');
+            trigger.classList.remove('active');
+        }
+    });
+
+    // --- 高亮与年份判断逻辑 ---
+    const items = document.querySelectorAll('.meteor-item-small');
+    const today = new Date();
+    const currentYear = today.getFullYear(); // 获取今年年份 (例如 2025)
+    const currentMonth = today.getMonth() + 1;
+    const currentDay = today.getDate();
+    
+    let foundNext = false;
+
+    items.forEach(item => {
+        const dateStr = item.getAttribute('data-date').split(' - ')[0]; 
+        const [m, d] = dateStr.split('.').map(Number);
+        
+        if (!foundNext) {
+            // 寻找今年还没过的流星雨
+            if (m > currentMonth || (m === currentMonth && d >= currentDay)) {
+                item.classList.add('next-event');
+                item.querySelector('.meteor-status').innerHTML = '<span class="dot-next"></span>';
+                foundNext = true; 
+            }
+        }
+    });
+    
+    // 👇 核心修改在这里
+    if (foundNext) {
+        // 情况 A：今年还有流星雨 -> 显示今年
+        yearSpan.innerText = currentYear;
+    } else {
+        // 情况 B：今年的都过完了 -> 显示明年
+        yearSpan.innerText = currentYear + 1;
+        
+        // 并且高亮列表里的第一个（明年的第一场）
+        if (items.length > 0) {
+            items[0].classList.add('next-event');
+            items[0].querySelector('.meteor-status').innerHTML = '<span class="dot-next"></span>';
+        }
+    }
+});
+</script>
