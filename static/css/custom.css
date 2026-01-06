@@ -662,8 +662,25 @@ body {
     font-size: 0.9em;    /* 字号稍微小一点 */
     color: #8899a6;      /* 灰蓝色 */
 }
+
 @media screen and (max-width: 768px) {
     .bilingual-book {
         grid-template-columns: 1fr; /* 手机变单栏 */
     }
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: rgba(255, 255, 255, 0.03); /* 淡色背景 */
+}
+
+th, td {
+    border: 1px solid rgba(100, 149, 237, 0.3); /* 你的星空蓝边框 */
+    padding: 12px;
+}
+
+th {
+    background: rgba(100, 149, 237, 0.1);
 }

@@ -184,7 +184,7 @@
 
         update(dt) {
             this.r += this.speed * dt; // 使用计算出来的动态速度
-            this.a *= 0.94;            // 衰减
+            this.a *= 0.93;            // 衰减
         }
 
         draw() {
@@ -369,7 +369,7 @@
             ctx.clearRect(0, 0, cw, ch);
             
             // 补充雨滴
-            if (drops.length < (isMobile ? 30 : 120)) drops.push(new Drop());
+            if (drops.length < (isMobile ? 20 : 80)) drops.push(new Drop());
             
             // 更新雨滴
             drops.forEach(d => { d.update(dt); d.draw(); });
