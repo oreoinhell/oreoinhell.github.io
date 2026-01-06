@@ -622,7 +622,7 @@ body:not(.night) .liberated-year-title {
 }
 
 /* =================================================================
-   11. 【全局字体】中文字体美化 (方案一：文艺宋体)
+   11. 【全局字体】中文字体美化
    ================================================================= */
 body {
     /* 英文用 Georgia (经典的衬线体)，中文优先用 宋体 */
@@ -636,4 +636,34 @@ body {
 /* 移动端优化：手机上宋体可能太细，加粗一点点 */
 @media screen and (max-width: 768px) {
     body { font-weight: 500; }
+}
+
+/* =================================================================
+   12. 【书籍】拉英双语内容植入
+   ================================================================= */
+.bilingual-book {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 严格的 1:1 分栏 */
+    gap: 30px;
+    margin: 40px 0;
+}
+
+/* 拉丁文：庄重，有历史沉淀感 */
+.latin-part {
+    font-family: "Palatino Linotype", "Book Antiqua", serif;
+    font-weight: bold;
+    letter-spacing: 1px; /* 字母稍微分开一点，更有碑文感 */
+    color: #847238;      /* 比如用个暗金色？或者保持你的星空蓝 */
+}
+
+/* 英文：极简，不抢戏 */
+.trans-part {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 0.9em;    /* 字号稍微小一点 */
+    color: #8899a6;      /* 灰蓝色 */
+}
+@media screen and (max-width: 768px) {
+    .bilingual-book {
+        grid-template-columns: 1fr; /* 手机变单栏 */
+    }
 }

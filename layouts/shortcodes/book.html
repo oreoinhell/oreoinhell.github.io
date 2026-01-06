@@ -1,0 +1,12 @@
+{{ $content := .Inner }}
+{{ $parts := split $content "<split>" }}
+<div class="bilingual-book">
+    <div class="latin-part">
+        {{ index $parts 0 | markdownify }}
+    </div>
+    <div class="trans-part">
+        {{ if gt (len $parts) 1 }}
+            {{ index $parts 1 | markdownify }}
+        {{ end }}
+    </div>
+</div>
