@@ -24,7 +24,3 @@ _build:
 
 ### 联系我
 你可以通过 [邮件](mailto:oreoinhell@gmail.com) 找到我。
-
-<br>
-
-![Avatar](/images/icon.png)
