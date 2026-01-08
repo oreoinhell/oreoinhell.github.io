@@ -654,6 +654,7 @@ body {
     font-weight: bold;
     letter-spacing: 1px; /* 字母稍微分开一点，更有碑文感 */
     color: #847238;      /* 比如用个暗金色？或者保持你的星空蓝 */
+    background: rgba()
 }
 
 /* 英文：极简，不抢戏 */
@@ -673,7 +674,6 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
-    background: rgba(255, 255, 255, 0.03); /* 淡色背景 */
 }
 
 th, td {
