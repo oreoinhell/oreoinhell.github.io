@@ -684,3 +684,87 @@ th, td {
 th {
     background: rgba(100, 149, 237, 0.1);
 }
+
+/* =================================================================
+   13. 【修复】目录 (TOC) 专属优化
+   ================================================================= */
+
+/* 1. 外层容器：去油瘦身 */
+.toc {
+    /* 核心：去掉强制的最小宽度 (200px)，允许它缩到很窄 */
+    min-width: unset !important; 
+    
+    /* 让盒子宽度“适应内容”：字少就窄，字多就宽 */
+    width: fit-content !important;  
+    
+    /* 限制最大宽度，防止太宽挡住正文 */
+    max-width: unset !important;    
+    
+    /* 外层只留极小的呼吸空间 */
+    padding: 6px !important;        
+    
+    /* 基础字号 */
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+}
+
+/* 2. 内层容器：关键修复！ */
+.toc .toc-content {
+    /* 默认这里藏了 20px 的内边距，必须清零！ */
+    padding: 0 !important; 
+}
+
+/* 3. 列表项：极致压缩缩进 */
+.toc ul {
+    /* 把左侧缩进从 20-40px 压到 10px，不浪费左边空间 */
+    padding-left: 10px !important; 
+    margin: 0 !important;
+}
+
+/* 4. 标题文字优化 */
+.toc .toc-content > ul > li > a {
+    font-weight: 700 !important;
+    color: #333;
+    display: block;
+    margin-top: 5px !important;
+    margin-bottom: 2px !important;
+    white-space: nowrap; /* 强制主标题不换行（如果太长可能会撑宽） */
+}
+
+/* 5. 拉丁语二级标题 */
+.toc .toc-content ul ul li a {
+    font-size: 11px !important;
+    color: #888;
+    padding: 1px 0 !important;
+    
+    /* 允许长单词换行，防止撑爆盒子 */
+    white-space: normal; 
+    word-break: break-word; 
+}
+
+/* 6. 深色模式适配 */
+body.night .toc .toc-content > ul > li > a { color: #ddd !important; }
+body.night .toc .toc-content ul ul li a { color: #999 !important; }
+.toc-active { color: #1976d2 !important; font-weight: bold !important; }
+
+body.night .toc {
+    /* 1. 强行覆盖掉前面定义的 30px 大边距 */
+    padding: 6px !important; 
+    
+    /* 2. 保持和亮色模式一样的紧凑宽度 */
+    width: fit-content !important; 
+    min-width: unset !important;
+    max-width: unset !important;
+    
+}
+
+/* 修复深色模式下的内层间距 */
+body.night .toc .toc-content {
+    padding: 0 !important;
+}
+
+/* 修复深色模式下的列表缩进 */
+body.night .toc ul {
+    padding-left: 10px !important;
+    margin: 0 !important;
+}
