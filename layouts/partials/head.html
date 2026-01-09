@@ -56,10 +56,11 @@
 <link rel="manifest" href="{{.Site.Params.manifest}}">
 {{end}}
   
-{{if .Params.canonicalUrl}}
-<link rel="canonical" href="{{.Params.canonicalUrl}}" />
-{{end}}
-
+{{ if .Params.canonicalUrl }}
+    <link rel="canonical" href="{{ .Params.canonicalUrl }}" />
+{{ else }}
+    <link rel="canonical" href="{{ .Permalink }}" />
+{{ end }}
 <!-- favicon -->
 {{ if .Site.Params.favicon }}
 <link rel="icon" href="{{ .Site.Params.favicon | absURL }}">
