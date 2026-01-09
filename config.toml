@@ -40,7 +40,7 @@ enableReadingTime = true
 customCSS = ["css/custom.css"]
 
 # Microsoft Clarity (https://clarity.microsoft.com/) is a free user behavior recording and analytics tool
-clarity = "abcdefghzd"
+clarity = "uys15bb3eo"
 
 # Twitter Card and Open Graph settings
 enableOpenGraph = true
