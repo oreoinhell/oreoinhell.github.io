@@ -1,10 +1,11 @@
-baseURL = "http://oreoinhell.github.io"
+baseURL = "https://oreoinhell.github.io"
 DefaultContentLanguage = "zh" # Theme's display language, supports: en, fr, zh, zh-hant
 languageCode = "en-us"
 title = "奥利奥的深坑"
 copyright = "是的，这里都是oreoinhell写的，写起来还挺麻烦的。"
 theme = "diary"
 hasCJKLanguage = true
+enableRobotsTXT = true
 
 # Generate sitemap in the public folder
 [sitemap]
@@ -44,8 +45,8 @@ clarity = "abcdefghzd"
 # Twitter Card and Open Graph settings
 enableOpenGraph = true
 enableTwitterCards = true
-title = "My Blog" # will set 'og:site_name'
-description = "My HomePage Description"  # will set 'og:description'
+title = "奥利奥的深坑" 
+description = "一个比较玄妙的地方。"
 
 
 # Please visit https://giscus.app/ to generate settings.
