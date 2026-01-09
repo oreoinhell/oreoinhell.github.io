@@ -16,7 +16,7 @@ enableRobotsTXT = true
 # Google Analytics
 [services]
   [services.googleAnalytics]
-    id = "G-XXXXXXXXXX"  # Your Google Analytics ID
+    id = "G-LR8NJ73YSL"  # Your Google Analytics ID
 
 [markup]
   [markup.highlight]
