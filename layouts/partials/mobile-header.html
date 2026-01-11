@@ -29,19 +29,12 @@
                 </a>
                 {{ end }}
             {{ end }}
-            {{ if and (not (.Site.Params.disableToC) ) (.IsPage) }}
-            <div class="toc">
-                {{- partial "toc.html" . -}}
-            </div>
-            {{ end }}
           <div class="drawer-menu">
              {{ range .Site.Menus.main }}
                 {{ end }}
              <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
                      {{ partial "widget-progress.html" . }}
              </div>
-             {{ if and (not (.Site.Params.disableToC) ) (.IsPage) }}
-                 {{ end }}
           </div>
         </div>
     </div>

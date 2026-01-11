@@ -11,65 +11,77 @@ html, body, #app, #content,
 }
 
 /* =================================================================
-   2. 【卡片装修】核心样式 (雨/烟/星的载体)
+   2. 【卡片装修】核心样式 (布局统一，颜色分治)
    ================================================================= */
-/* 这里的选择器囊括了首页列表卡片、文章页、侧边栏、目录 */
-body.night .post, 
-body.night .post-item, 
-body.night .sidebar, 
-body.night .toc {
-    /* --- 核心：背景色 --- */
-    /* 默认给个深色底，JS 会根据模式微调，但这里做个保底 */
-    background-color: rgba(30, 30, 30, 0.75) !important;
-    
-    /* --- 核心：空间修复 (解决“没有余空”) --- */
-    box-sizing: border-box !important; /* 关键：让内边距算在宽度内，防止撑爆 */
-    padding: 30px !important;          /* 内边距：文字离边框的距离 */
-    margin-bottom: 30px !important;    /* 外边距：卡片之间的距离 */
-    
-    /* --- 核心：视觉特效 --- */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 12px !important;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3) !important;
-    
-    /* --- 字体颜色强制修复 --- */
-    color: #e0e0e0 !important;
-}
 
+/* --- A. 通用骨架 (无论深浅，形状尺寸必须一致) --- */
+/* 这里定义形状、间距、过渡，权重一视同仁 */
 .post, 
 .post-item, 
 .sidebar, 
 .toc {
-    /* --- 核心：背景色 --- */
-    /* 默认给个浅色底，JS 会根据模式微调，但这里做个保底 */
-    background-color: rgba(255, 255, 255, 0.75) !important;
+    /* 1. 空间修复 */
+    box-sizing: border-box !important;
+    padding: 30px !important;          /* 电脑端默认内边距 */
+    margin-bottom: 30px !important;    /* 电脑端默认卡片间距 */
     
-    /* --- 核心：空间修复 (解决“没有余空”) --- */
-    box-sizing: border-box !important; /* 关键：让内边距算在宽度内，防止撑爆 */
-    padding: 30px !important;          /* 内边距：文字离边框的距离 */
-    margin-bottom: 30px !important;    /* 外边距：卡片之间的距离 */
-    
-    /* --- 核心：视觉特效 --- */
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    /* 2. 形状修复 */
     border-radius: 12px !important;
-    box-shadow: 0 6px 10px rgba(0,0,0,0.1) !important;
+    border-width: 1px !important;
+    border-style: solid !important;
     
-    /* --- 字体颜色强制修复 --- */
+    /* 3. 玻璃特效基础 */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    /* 4. 过渡动画 */
+    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+/* --- B. 深色模式皮肤 (Dark Skin) --- */
+/* 只负责颜色，不碰尺寸！ */
+body.night .post, 
+body.night .post-item, 
+body.night .sidebar, 
+body.night .toc {
+    background-color: rgba(30, 30, 30, 0.75) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3) !important;
+    color: #e0e0e0 !important;
+}
+
+/* --- C. 浅色模式皮肤 (Light Skin) --- */
+/* 只负责颜色，不碰尺寸！ */
+.post, 
+.post-item, 
+.sidebar, 
+.toc {
+    background-color: rgba(255, 255, 255, 0.75) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 6px 10px rgba(0,0,0,0.1) !important;
     color: #000000 !important;
 }
 
-/* 针对移动端的额外保护 (防止卡片贴着手机屏幕边缘) */
+/* --- D. 移动端强制适配 (布局修正) --- */
+/* 因为前面基础样式不再绑定 body.night，这里的权重足够覆盖上面 */
 @media screen and (max-width: 768px) {
     .post, .post-item {
+        /* 1. 强制占满整行 (解决长短不一) */
+        display: block !important;
+        width: auto !important;
+        min-width: 0 !important;
+        
+        /* 2. 移动端专属边距 (深浅模式都会生效) */
         margin-left: 10px !important;
         margin-right: 10px !important;
-        padding: 20px !important; /* 移动端内边距稍微小一点 */
+        padding: 20px !important; /* 统一缩小内边距 */
     }
 }
+
+/* =================================================================
+   3. 【标签显示】标签特效
+   ================================================================= */
+
 
 /* 标签云容器：让标签横向排列，自动换行 */
 .tag-cloud {
@@ -142,7 +154,7 @@ body.night .stat-card {
 }
 
 /* =================================================================
-   5. 【新增】标签页仪表盘 (Dashboard)
+   4. 【新增】标签页仪表盘 (Dashboard)
    ================================================================= */
 
 /* 容器布局：网格排列，自动适应手机和电脑 */
@@ -241,7 +253,7 @@ body.night .stat-label {
 }
 
 /* =================================================================
-   6. 【侧边栏】施工现场进度条
+   5. 【侧边栏】施工现场进度条
    ================================================================= */
 .sidebar-progress-container {
     margin-top: 30px; 
@@ -322,7 +334,7 @@ body.night .progress-bar {
 }
 
 /* =================================================================
-   7. 【修复】手机抽屉菜单在深色模式下的字体颜色
+   6. 【修复】手机抽屉菜单在深色模式下的字体颜色
    ================================================================= */
 
 /* 1. 修复标题 "🚧 施工现场" */
@@ -343,7 +355,7 @@ body.night .drawer-menu .progress-bar {
 }
 
 /* =================================================================
-   8. 【修复】去除 post-item-wrapper 的多余背景 (解决双层框问题)
+   7. 【修复】去除 post-item-wrapper 的多余背景 (解决双层框问题)
    ================================================================= */
 .post-item-wrapper,.post-item-info-wrapper {
     /* 1. 外层容器平时完全隐身 */
@@ -385,7 +397,7 @@ body.night .post-item-wrapper:hover .post-item {
 }
 
 /* =================================================================
-   9. 【悬浮组件】流星雨观测站 (右下角 FAB)
+   8. 【悬浮组件】流星雨观测站 (右下角 FAB)
    ================================================================= */
 
 /* -----------------------------------------------------------------
@@ -590,7 +602,7 @@ body.night .dot-next {
 }
 
 /* =================================================================
-   10. 解放大title
+   9. 解放大title
    ================================================================= */
 
 .liberated-year-title {
@@ -622,7 +634,7 @@ body:not(.night) .liberated-year-title {
 }
 
 /* =================================================================
-   11. 【全局字体】中文字体美化
+   10. 【全局字体】中文字体美化
    ================================================================= */
 body {
     /* 英文用 Georgia (经典的衬线体)，中文优先用 宋体 */
@@ -639,7 +651,7 @@ body {
 }
 
 /* =================================================================
-   12. 【书籍】拉英双语内容植入
+   11. 【书籍】拉英双语内容植入
    ================================================================= */
 .bilingual-book {
     display: grid;
@@ -714,11 +726,15 @@ th {
 }
 
 /* =================================================================
-   13. 【修复】目录 (TOC) 专属优化
+   12. 【修复】目录 (TOC) 专属优化 & 移动端分流
    ================================================================= */
 
-/* 1. 外层容器：去油瘦身 */
-.toc {
+/* ---------------------------------------------------------
+   A. 电脑端样式 (保持你原本的紧凑设计)
+   --------------------------------------------------------- */
+/* 这里的规则，我们只允许在屏幕宽度 > 1024px 时生效 */
+@media screen and (min-width: 1024px) {
+    .toc {
     /* 核心：去掉强制的最小宽度 (200px)，允许它缩到很窄 */
     min-width: unset !important; 
     
@@ -737,62 +753,63 @@ th {
 }
 
 /* 2. 内层容器：关键修复！ */
-.toc .toc-content {
+    .toc .toc-content {
     /* 默认这里藏了 20px 的内边距，必须清零！ */
-    padding: 0 !important; 
-}
+        padding: 0 !important; 
+    }
 
 /* 3. 列表项：极致压缩缩进 */
-.toc ul {
-    /* 把左侧缩进从 20-40px 压到 10px，不浪费左边空间 */
-    padding-left: 10px !important; 
-    margin: 0 !important;
-}
+    .toc ul {
+        /* 把左侧缩进从 20-40px 压到 10px，不浪费左边空间 */
+        padding-left: 10px !important; 
+        margin: 0 !important;
+    }
 
 /* 4. 标题文字优化 */
-.toc .toc-content > ul > li > a {
-    font-weight: 700 !important;
-    color: #333;
-    display: block;
-    margin-top: 5px !important;
-    margin-bottom: 2px !important;
-    white-space: nowrap; /* 强制主标题不换行（如果太长可能会撑宽） */
-}
+    .toc .toc-content > ul > li > a {
+        font-weight: 700 !important;
+        color: #333;
+        display: block;
+        margin-top: 5px !important;
+        margin-bottom: 2px !important;
+        white-space: nowrap; /* 强制主标题不换行（如果太长可能会撑宽） */
+    }
 
 /* 5. 拉丁语二级标题 */
-.toc .toc-content ul ul li a {
-    font-size: 11px !important;
-    color: #888;
-    padding: 1px 0 !important;
+    .toc .toc-content ul ul li a {
+        font-size: 11px !important;
+        color: #888;
+        padding: 1px 0 !important;
     
-    /* 允许长单词换行，防止撑爆盒子 */
-    white-space: normal; 
-    word-break: break-word; 
-}
+        /* 允许长单词换行，防止撑爆盒子 */
+        white-space: normal; 
+        word-break: break-word; 
+    }
 
 /* 6. 深色模式适配 */
-body.night .toc .toc-content > ul > li > a { color: #ddd !important; }
-body.night .toc .toc-content ul ul li a { color: #999 !important; }
-.toc-active { color: #1976d2 !important; font-weight: bold !important; }
+    body.night .toc .toc-content > ul > li > a { color: #ffffff !important; }
+    body.night .toc .toc-content ul ul li a { color: #999 !important; }
+    .toc-active { font-weight: bold !important; }
 
-body.night .toc {
+    body.night .toc {
     /* 1. 强行覆盖掉前面定义的 30px 大边距 */
-    padding: 6px !important; 
+        padding: 6px !important; 
     
     /* 2. 保持和亮色模式一样的紧凑宽度 */
-    width: fit-content !important; 
-    min-width: unset !important;
-    max-width: unset !important;
+        width: fit-content !important; 
+        min-width: unset !important;
+        max-width: unset !important;
     
-}
+    }
 
 /* 修复深色模式下的内层间距 */
-body.night .toc .toc-content {
-    padding: 0 !important;
-}
+    body.night .toc .toc-content {
+        padding: 0 !important;
+    }
 
 /* 修复深色模式下的列表缩进 */
-body.night .toc ul {
-    padding-left: 10px !important;
-    margin: 0 !important;
+    body.night .toc ul {
+        padding-left: 10px !important;
+        margin: 0 !important;
+    }
 }
