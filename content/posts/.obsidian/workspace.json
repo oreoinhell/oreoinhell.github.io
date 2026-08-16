@@ -4,41 +4,41 @@
     "type": "split",
     "children": [
       {
-        "id": "a0b7b7e3d2c9d922",
+        "id": "f1029cec5091a265",
         "type": "tabs",
         "children": [
           {
-            "id": "e0d2889b79933fa0",
+            "id": "502ee7fd98b3831f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "第一篇博文.md",
+                "file": "拉丁语4.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "第一篇博文"
+              "title": "拉丁语4"
             }
           }
         ]
       },
       {
-        "id": "cfe38fb6cf7191ae",
+        "id": "ad222ec72981361b",
         "type": "tabs",
         "children": [
           {
-            "id": "83b9a7b4806fbf28",
+            "id": "e7fa3f28812305b7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "拉丁语3.md",
+                "file": "拉丁语4.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "拉丁语3"
+              "title": "拉丁语4"
             }
           }
         ]
@@ -61,7 +61,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
@@ -200,14 +202,19 @@
       "daily-notes:打开/创建今天的日记": false,
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
-      "bases:新建数据库": false
+      "bases:新建数据库": false,
+      "workspaces:管理工作区布局": false
     }
   },
-  "active": "e0d2889b79933fa0",
+  "active": "502ee7fd98b3831f",
   "lastOpenFiles": [
     "拉丁语3.md",
-    "一周追星小记.md",
     "拉丁语2.md",
-    "拉丁语1.md"
+    "拉丁语4.md",
+    "拉丁语1.md",
+    "Pasted image 20260816105739.png",
+    "未命名.base",
+    "第一篇博文.md",
+    "一周追星小记.md"
   ]
 }
