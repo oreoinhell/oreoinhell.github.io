@@ -1,5 +1,5 @@
 - name: "《奥卡姆剃刀》全本翻译"
-  percent: 60
+  percent: 80
   color: "green"
 
 - name: "拉丁语自学ing"
@@ -9,3 +9,7 @@
 - name: "咚耶的5+1"
   percent: 50
   color: "yellow"
+
+- name: "胖球观星"
+  percent: 10
+  color: "blue"
